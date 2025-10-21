@@ -12,23 +12,40 @@ if __name__ == "__main__":
   add_task("Làm bài tập thực hành ở nhà")
   # app.py
 
+# Danh sách các công việc (bây giờ là list các dictionary)
 tasks = []
 
 def add_task(task_name):
-    """Thêm 1 công việc (ở bước này tasks là list of string)."""
-    tasks.append(task_name)
+    """Thêm công việc mới, mặc định là chưa hoàn thành"""
+    tasks.append({'name': task_name, 'completed': False})
+
+def complete_task(task_index):
+    """Đánh dấu công việc là hoàn thành"""
+    if 0 <= task_index < len(tasks):
+        tasks[task_index]['completed'] = True
+        print(f"Đã đánh dấu '{tasks[task_index]['name']}' là hoàn thành!")
+    else:
+        print("❌ Chỉ số công việc không hợp lệ!")
 
 def list_tasks():
-    """Liệt kê tất cả công việc, có đánh số thứ tự."""
+    """Liệt kê tất cả công việc, hiển thị trạng thái [x]/[ ]"""
     if not tasks:
-        print("Không có công việc nào trong danh sách.")
-        return
-    for i, task in enumerate(tasks, start=1):
-        print(f"{i}. {task}")
+        print("Danh sách công việc trống!")
+    else:
+        for i, task in enumerate(tasks, 1):
+            status = "[x]" if task['completed'] else "[ ]"
+            print(f"{i}. {status} {task['name']}")
 
 if __name__ == "__main__":
-    # ví dụ khởi tạo dữ liệu ban đầu — bạn có thể thay đổi
+    # Thêm vài công việc mẫu
     add_task("Học bài Git")
     add_task("Làm bài tập")
-    # gọi hàm list_tasks() theo đề
+
+    print("\n📋 Danh sách công việc ban đầu:")
+    list_tasks()
+
+    # Đánh dấu công việc 1 là hoàn thành
+    complete_task(0)
+
+    print("\n✅ Danh sách sau khi đánh dấu:")
     list_tasks()
